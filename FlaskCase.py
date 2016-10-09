@@ -3,11 +3,12 @@
 from flask import Flask
 from flask_bootstrap import Bootstrap
 from flask import render_template
+from flask_sslify import SSLify
 import  requests
 
 app = Flask(__name__)
 bootstrap = Bootstrap(app)
-
+sslify = SSLify(app)
 
 @app.route('/')
 def dailyreport_dashboard():
