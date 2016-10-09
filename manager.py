@@ -10,6 +10,10 @@ app = Flask(__name__)
 bootstrap = Bootstrap(app)
 sslify = SSLify(app)
 
+# app.jinja_env.variable_start_string = '{{ '
+# app.jinja_env.variable_end_string = ' }}'
+
+
 @app.route('/')
 def dailyreport_dashboard():
     name = "baogq"

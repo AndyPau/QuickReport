@@ -1,5 +1,11 @@
 {% extends "bootstrap/base.html" %}
-{% block title %} Flasky {% endblock %}
+{% block title %} QuickReport {% endblock %}
+
+{# 添加本地CSS #}
+{% block styles %}
+    {{ super() }}
+    <link href="/static/vendors/third_party/" rel="stylesheet">
+{% endblock %}
 
 {% block navbar %}
 
@@ -12,11 +18,11 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/">Flasky</a>
+                <a class="navbar-brand" href="/">QuickReport</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="/">Home</a></li>
+                    <li><a href="/">收入日报</a></li>
                 </ul>
             </div>
         </div>
@@ -31,4 +37,11 @@
         </div>
     </div>
 
+{% endblock %}
+
+{# 复用Flask-Bootstrap的Script区域，并添加本地Javascript文件 #}
+{% block scripts %}
+    {{ super() }}
+    <script type="javascript" src="/static/vendors/third_party/jquery/jquery.min.js"></script>
+    <script type="javascript" src="/static/vendors/third_party/echarts/dist/echarts.min.js"></script>
 {% endblock %}
