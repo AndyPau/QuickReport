@@ -6,7 +6,7 @@ from flask import render_template
 from flask_sslify import SSLify
 import  requests
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='static/', static_folder='static/')
 bootstrap = Bootstrap(app)
 sslify = SSLify(app)
 
@@ -16,8 +16,7 @@ sslify = SSLify(app)
 
 @app.route('/')
 def dailyreport_dashboard():
-    name = "baogq"
-    return render_template("homepage.html", name=name)
+    return render_template("index.html")
 
 
 if __name__ == '__main__':
