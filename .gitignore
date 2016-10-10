@@ -1,3 +1,5 @@
 # Created by .ignore support plugin (hsz.mobi)
 .idea/
-static/scripts/
+node_modules/
+static/js/app.module.js.map
+typings/
