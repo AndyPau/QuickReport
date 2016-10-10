@@ -25,17 +25,18 @@
     "@angular/platform-browser-dynamic": "~2.0.2",
     "@angular/router": "~3.0.2",
     "@angular/upgrade": "~2.0.2",
+    "angular": "^1.2.30",
     "angular-in-memory-web-api": "~0.1.5",
     "bootstrap": "^3.3.7",
     "core-js": "^2.4.1",
+    "datatable": "^2.0.2",
+    "datatables": "^1.10.12",
     "echarts": "^3.2.3",
+    "pivottable": "^2.1.0",
     "reflect-metadata": "^0.1.8",
     "rxjs": "5.0.0-beta.12",
     "systemjs": "0.19.39",
-    "zone.js": "^0.6.25",
-    "echarts":"^3.2.3",
-    "pivottable":"^2.1.0",
-    "datatables":"^1.10.12"
+    "zone.js": "^0.6.25"
   },
   "devDependencies": {
     "concurrently": "^3.0.0",

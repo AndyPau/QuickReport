@@ -30,15 +30,16 @@
     <script src="/node_modules/zone.js/dist/zone.js"></script>
     <script src="/node_modules/reflect-metadata/Reflect.js"></script>
     <script src="/node_modules/systemjs/dist/system.src.js"></script>
+    <script src="/node_modules/angular/angular.min.js"></script>
 
     <!-- 2. Configure SystemJS -->
-    <script src="{{ url_for('static', filename='js/systemjs.config.js') }}"></script>
-    <script>
-      System.import('app').catch(function(err){ console.error(err); });
-    </script>
+    {#    <script src="{{ url_for('static', filename='js/systemjs.config.js') }}"></script>#}
+    {#    <script>#}
+    {#      System.import('app').catch(function(err){ console.error(err); });#}
+    {#    </script>#}
 
 </head>
-<body>
+<body ng-app="QuickReportApp">
 <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
