@@ -1,9 +1,9 @@
 <!doctype html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="" ng-app="QuickReportApp"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang="" ng-app="QuickReportApp"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9" lang="" ng-app="QuickReportApp"> <![endif]-->
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="" ng-app> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang="" ng-app"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang="" ng-app> <![endif]-->
 <!--[if gt IE 8]><!-->
-<html class="no-js" lang="" ng-app=""> <!--<![endif]-->
+<html class="no-js" lang="" ng-app> <!--<![endif]-->
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -22,15 +22,18 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-theme.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 
-    <script src="{{ url_for('static', filename='js/vendor/modernizr-2.8.3-respond-1.4.2.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/modernizr-2.8.3-respond-1.4.2.min.js') }}"></script>
+
+    {#    Load Angular 1.x Library#}
+    <script src="{{ url_for('static', filename='js/vendor/angular/angular.min.js') }}"></script>
 
     <!-- 1. Load libraries -->
     <!-- Polyfill(s) for older browsers -->
-    <script src="/node_modules/core-js/client/shim.min.js"></script>
-    <script src="/node_modules/zone.js/dist/zone.js"></script>
-    <script src="/node_modules/reflect-metadata/Reflect.js"></script>
-    <script src="/node_modules/systemjs/dist/system.src.js"></script>
-    <script src="/node_modules/angular/angular.min.js"></script>
+    {#    <script src="/node_modules/core-js/client/shim.min.js"></script>#}
+    {#    <script src="/node_modules/zone.js/dist/zone.js"></script>#}
+    {#    <script src="/node_modules/reflect-metadata/Reflect.js"></script>#}
+    {#    <script src="/node_modules/systemjs/dist/system.src.js"></script>#}
+    {#    <script src="/node_modules/angular/angular.min.js"></script>#}
 
     <!-- 2. Configure SystemJS -->
     {#    <script src="{{ url_for('static', filename='js/systemjs.config.js') }}"></script>#}
@@ -82,7 +85,7 @@
 
 <div class="container">
     <!-- Example row of columns -->
-    <div class="row">
+    <div class="row" ng-app>
         <div class="col-md-4">
             <h2>Heading</h2>
             <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris
@@ -118,11 +121,15 @@
     </footer>
 </div> <!-- /container -->
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="{{ url_for('static', filename='js/vendor/jquery-1.11.2.min.js')}}"><\/script>')</script>
+<script>window.jQuery || document.write('<script src="{{ url_for('static', filename='js/vendor/jquery/dist/jquery.min.js')}}"><\/script>')</script>
 
-<script src="{{ url_for('static', filename='js/vendor/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+
 
 <script src="{{ url_for('static', filename='js/plugins.js') }}"></script>
 <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+{#business script for angular 1.x#}
+<script src="{{ url_for('static', filename='js/angular1.x/controller.js') }}"></script>
 </body>
 </html>
