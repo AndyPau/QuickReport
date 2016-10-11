@@ -13,34 +13,14 @@
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
-    <style>
-        body {
-            padding-top: 50px;
-            padding-bottom: 20px;
-        }
-    </style>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-theme.min.css') }}">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='js/vendor/bootstrap/dist/css/bootstrap.min.css') }}"/>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='js/vendor/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css') }}"/>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 
     <script src="{{ url_for('static', filename='js/modernizr-2.8.3-respond-1.4.2.min.js') }}"></script>
-
-    {#    Load Angular 1.x Library#}
-    <script src="{{ url_for('static', filename='js/vendor/angular/angular.min.js') }}"></script>
-
-    <!-- 1. Load libraries -->
-    <!-- Polyfill(s) for older browsers -->
-    {#    <script src="/node_modules/core-js/client/shim.min.js"></script>#}
-    {#    <script src="/node_modules/zone.js/dist/zone.js"></script>#}
-    {#    <script src="/node_modules/reflect-metadata/Reflect.js"></script>#}
-    {#    <script src="/node_modules/systemjs/dist/system.src.js"></script>#}
-    {#    <script src="/node_modules/angular/angular.min.js"></script>#}
-
-    <!-- 2. Configure SystemJS -->
-    {#    <script src="{{ url_for('static', filename='js/systemjs.config.js') }}"></script>#}
-    {#    <script>#}
-    {#      System.import('app').catch(function(err){ console.error(err); });#}
-    {#    </script>#}
-
 </head>
 <body>
 <!--[if lt IE 8]>
@@ -60,13 +40,16 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <form class="navbar-form navbar-right" role="form">
-                <div class="form-group">
-                    <input type="text" placeholder="Email" class="form-control">
+                <div class='input-group date' id='datetimepicker1'>
+                    <input type='text' class="form-control"/>
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
                 </div>
-                <div class="form-group">
-                    <input type="password" placeholder="Password" class="form-control">
-                </div>
-                <button type="submit" class="btn btn-success">Sign in</button>
+                {#                <div class="form-group">#}
+                {#                    <input type="password" placeholder="Password" class="form-control">#}
+                {#                </div>#}
+                <button type="submit" class="btn btn-success">Generate</button>
             </form>
         </div><!--/.navbar-collapse -->
     </div>
@@ -85,7 +68,7 @@
 
 <div class="container">
     <!-- Example row of columns -->
-    <div class="row" ng-app>
+    <div class="row">
         <div class="col-md-4">
             <h2>Heading</h2>
             <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris
@@ -111,7 +94,7 @@
 
     {% raw %}
     <p>名字 : <input type="text" ng-model="name"></p>
-    <h1>Hello {{name}}</h1>
+    <h1>Hello {{name|uppercase}}</h1>
     {% endraw %}
 
     <hr>
@@ -120,16 +103,20 @@
         <p>&copy; CheetahMobile 2016</p>
     </footer>
 </div> <!-- /container -->
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="{{ url_for('static', filename='js/vendor/jquery/dist/jquery.min.js')}}"><\/script>')</script>
 
-<script src="{{ url_for('static', filename='js/vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-
-
-<script src="{{ url_for('static', filename='js/plugins.js') }}"></script>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script type="text/javascript" src="{{ url_for('static', filename='js/vendor/jquery/dist/jquery.min.js')}}"><\/script>')</script>
+<script type="text/javascript"
+        src="{{ url_for('static', filename='js/vendor/moment/min/moment.min.js') }}"></script>
+<script type="text/javascript"
+        src="{{ url_for('static', filename='js/vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+<script type="text/javascript"
+        src="{{ url_for('static', filename='js/vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 
-{#business script for angular 1.x#}
+{#    Load Angular 1.x Library#}
+<script src="{{ url_for('static', filename='js/vendor/angular/angular.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/angular1.x/controller.js') }}"></script>
 </body>
 </html>
