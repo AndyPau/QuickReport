@@ -27,6 +27,9 @@
     <script type="text/javascript"
             src="{{ url_for('static', filename='js/vendor/angular-bootstrap-datetimepicker/src/js/datetimepicker.templates.js') }}"></script>
 
+    <script type="text/javascript"
+            src="{{ url_for('static', filename='js/vendor/angular-date-time-input/src/dateTimeInput.js') }}"></script>
+
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-theme.min.css') }}">
     <link rel="stylesheet"
@@ -56,22 +59,23 @@
             </button>
             <a class="navbar-brand" href="#">QuickReport</a>
         </div>
-        <div id="navbar" class="navbar-collapse collapse" ng-controller="DatepickerPopupDemoCtrl">
+        <div id="navbar" class="navbar-collapse collapse" ng-controller="GenerateInputCtrl">
             <form class="navbar-form navbar-right" role="form">
 
                 <div class="dropdown">
-                    <a class="dropdown-toggle" id="dropdown2" role="button" data-toggle="dropdown" data-target="#"
+                    <a class="dropdown-toggle" id="dtInput" role="button" data-toggle="dropdown" data-target="#"
                        href="#">
                         <div class="input-group date ">
-                            <input type="text" class="form-control" data-ng-model="data.dateDropDownInput">
+                            <input type="text" class="form-control" data-ng-model="data.dtInput"
+                                   data-date-time-input="YYYY-MM-DD">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                         </div>
                     </a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                        <datetimepicker data-ng-model="data.dateDropDownInput"
-                                        data-datetimepicker-config="{ dropdownSelector: '#dropdown2' }"/>
+                        <datetimepicker data-ng-model="data.dtInput"
+                                        data-datetimepicker-config="{ dropdownSelector: '#dtInput', minView:'day' }"/>
                     </ul>
-                    <button type="submit" class="btn btn-success">Generate</button>
+                    <button type="submit" class="btn btn-success" ng-click="GenerateClick()">Generate</button>
                 </div>
 
             </form>
@@ -119,21 +123,12 @@
     {% raw %}
     <p>名字 : <input type="text" ng-model="name"></p>
     <h1>Hello {{name|uppercase}}</h1>
+    <h2 ng-controller="ControllerTestOne">{{ dtInput }}</h2>
     {% endraw %}
 
     <hr>
 
-    {#    {% raw %}#}
-    {#    <input type="text"#}
-    {#           class="form-control"#}
-    {#           ng-model="vm.dateTime"#}
-    {#           data-date-time-picker#}
-    {#           data-language="{{ ru }}"#}
-    {#           data-pick12HourFormat="false"#}
-    {#           data-use-current="{{ false }}"#}
-    {#           data-location="{{ testProject }}"#}
-    {#    />#}
-    {#    {% endraw %}#}
+
     <br/>
 
 
