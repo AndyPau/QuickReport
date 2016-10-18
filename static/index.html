@@ -1,9 +1,9 @@
 <!doctype html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="" ng-app> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang="" ng-app"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9" lang="" ng-app> <![endif]-->
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="" ng-app="QuickReportApp"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang="" ng-app="QuickReportApp"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang="" ng-app="QuickReportApp"> <![endif]-->
 <!--[if gt IE 8]><!-->
-<html class="no-js" lang="" ng-app> <!--<![endif]-->
+<html class="no-js" lang="" ng-app="QuickReportApp"> <!--<![endif]-->
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -12,12 +12,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-theme.min.css') }}">
+
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-sanitize.js"></script>
+    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.2.0.js"></script>
+
+    <script type="text/javascript" src="{{ url_for('static', filename='js/vendor/moment/moment.js') }}"></script>
+
+    <script type="text/javascript"
+            src="{{ url_for('static', filename='js/vendor/angular-bootstrap-datetimepicker/src/js/datetimepicker.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ url_for('static', filename='js/vendor/angular-bootstrap-datetimepicker/src/js/datetimepicker.templates.js') }}"></script>
+
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-theme.min.css') }}">
     <link rel="stylesheet"
-          href="{{ url_for('static', filename='js/vendor/bootstrap/dist/css/bootstrap.min.css') }}"/>
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='js/vendor/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css') }}"/>
+          href="{{ url_for('static', filename='js/vendor/angular-bootstrap-datetimepicker/src/css/datetimepicker.css') }}">
+
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 
     <script src="{{ url_for('static', filename='js/modernizr-2.8.3-respond-1.4.2.min.js') }}"></script>
@@ -42,18 +56,24 @@
             </button>
             <a class="navbar-brand" href="#">QuickReport</a>
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
+        <div id="navbar" class="navbar-collapse collapse" ng-controller="DatepickerPopupDemoCtrl">
             <form class="navbar-form navbar-right" role="form">
-                <div class='input-group date' id='datetimepicker1'>
-                    <input type='text' class="form-control"/>
-                    <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
+
+                <div class="dropdown">
+                    <a class="dropdown-toggle" id="dropdown2" role="button" data-toggle="dropdown" data-target="#"
+                       href="#">
+                        <div class="input-group date ">
+                            <input type="text" class="form-control" data-ng-model="data.dateDropDownInput">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                        <datetimepicker data-ng-model="data.dateDropDownInput"
+                                        data-datetimepicker-config="{ dropdownSelector: '#dropdown2' }"/>
+                    </ul>
+                    <button type="submit" class="btn btn-success">Generate</button>
                 </div>
-                {#                <div class="form-group">#}
-                {#                    <input type="password" placeholder="Password" class="form-control">#}
-                {#                </div>#}
-                <button type="submit" class="btn btn-success">Generate</button>
+
             </form>
         </div><!--/.navbar-collapse -->
     </div>
@@ -103,6 +123,20 @@
 
     <hr>
 
+    {#    {% raw %}#}
+    {#    <input type="text"#}
+    {#           class="form-control"#}
+    {#           ng-model="vm.dateTime"#}
+    {#           data-date-time-picker#}
+    {#           data-language="{{ ru }}"#}
+    {#           data-pick12HourFormat="false"#}
+    {#           data-use-current="{{ false }}"#}
+    {#           data-location="{{ testProject }}"#}
+    {#    />#}
+    {#    {% endraw %}#}
+    <br/>
+
+
     <footer>
         <p>&copy; CheetahMobile 2016</p>
     </footer>
@@ -115,8 +149,6 @@
         src="{{ url_for('static', filename='js/vendor/moment/min/moment.min.js') }}"></script>
 <script type="text/javascript"
         src="{{ url_for('static', filename='js/vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-<script type="text/javascript"
-        src="{{ url_for('static', filename='js/vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 
 <!-- Latest compiled and minified JavaScript -->
@@ -125,8 +157,32 @@
 <!-- Latest compiled and minified Locales -->
 <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.0/locale/bootstrap-table-zh-CN.min.js"></script>
 
+<script src="//cdn.bootcss.com/echarts/3.2.3/echarts.min.js"></script>
+
+
 {#    Load Angular 1.x Library#}
-<script src="{{ url_for('static', filename='js/vendor/angular/angular.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/angular1.x/controller.js') }}"></script>
+{#<script src="{{ url_for('static', filename='js/vendor/angular/angular.min.js') }}"></script>#}
+{#<script src="{{ url_for('static', filename='js/vendor/angular-resource/angular-resource.min.js') }}"></script>#}
+
+<script src="{{ url_for('static', filename='js/vendor/lodash/dist/lodash.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/vendor/restangular/dist/restangular.min.js') }}"></script>
+
+
+<script src="{{ url_for('static', filename='js/angular1.x/module.js') }}"></script>
+{#<script src="{{ url_for('static', filename='js/angular1.x/controller.js') }}"></script>#}
+
+<script src="https://www.gstatic.com/firebasejs/3.4.1/firebase.js"></script>
+<script>
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyAG_KTemvfA9bjohbG_QuOBLMkgzkUG5pg",
+        authDomain: "quickreport-5eed8.firebaseapp.com",
+        databaseURL: "https://quickreport-5eed8.firebaseio.com",
+        storageBucket: "",
+        messagingSenderId: "821659280791"
+    };
+    firebase.initializeApp(config);
+</script>
+
 </body>
 </html>

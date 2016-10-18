@@ -3,4 +3,6 @@
 node_modules/
 static/js/app.module.js.map
 typings/
-static/js/vendor/*
+__pycache__/
+quick.db
+static/js/vendor/
