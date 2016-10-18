@@ -24,7 +24,7 @@ Date.prototype.Format = function (fmt) {
 
 // Angular Module
 var QuickReportAppModule = angular.module('QuickReportApp', ['ngAnimate', 'ngSanitize', 'ui.bootstrap',
-    'ui.bootstrap.datetimepicker', 'ui.dateTimeInput', 'ui.tinymce']);
+    'ui.bootstrap.datetimepicker', 'ui.dateTimeInput', 'ui.tinymce', 'bsTable']);
 
 QuickReportAppModule.factory('mySharedService', function ($rootScope) {
     var sharedService = {};
@@ -68,6 +68,110 @@ QuickReportAppModule.controller('ControllerTestTwo', function ($scope, mySharedS
 
     $scope.$on('handleBroadcast', function () {
         $scope.dtInput = mySharedService.message;
+    });
+
+});
+
+QuickReportAppModule.controller('ReportDescriptionCtrl', function ($scope, mySharedService) {
+    $scope.tinymceOptions = {
+        skin: 'lightgray',
+        theme: 'modern',
+        menubar: false,
+        resize: false
+    };
+
+});
+
+QuickReportAppModule.controller('MainTableCtrl', function ($scope, $http) {
+    $scope.workspaces = [];
+    $scope.workspaces.push({name: 'Workspace 1'});
+    $scope.workspaces.push({name: 'Workspace 2'});
+    $scope.workspaces.push({name: 'Workspace 3'});
+
+    function makeRandomRows(colData) {
+        var rows = [];
+        for (var i = 0; i < 15; i++) {
+            rows.push($.extend({
+                index: i,
+                id: 'row ' + i,
+                name: 'GOOG' + i
+
+            }, colData));
+        }
+        return rows;
+    }
+
+    $scope.workspaces.forEach(function (wk, index) {
+        var colData = {workspace: wk.name};
+        wk.rows = makeRandomRows(colData);
+
+        wk.bsTableControl = {
+            options: {
+                data: wk.rows,
+                rowStyle: function (row, index) {
+                    return {classes: 'none'};
+                },
+                cache: false,
+                striped: true,
+                pagination: false,
+                search: true,
+                showColumns: true,
+                showRefresh: false,
+                minimumCountColumns: 2,
+                clickToSelect: false,
+                showToggle: true,
+                maintainSelected: true,
+                columns: [{
+                    field: 'index',
+                    title: '#',
+                    align: 'right',
+                    valign: 'bottom',
+                    sortable: false
+                }, {
+                    field: 'id',
+                    title: 'Item ID',
+                    align: 'center',
+                    valign: 'bottom',
+                    sortable: false
+                }, {
+                    field: 'name',
+                    title: 'Item Name',
+                    align: 'center',
+                    valign: 'middle',
+                    sortable: false
+                }, {
+                    field: 'workspace',
+                    title: 'Workspace',
+                    align: 'left',
+                    valign: 'top',
+                    sortable: false
+                }, {
+                    field: 'flag',
+                    title: 'Flag',
+                    align: 'center',
+                    valign: 'middle',
+                    clickToSelect: false,
+                    formatter: flagFormatter,
+                    // events: flagEvents
+                }]
+            }
+        };
+        function flagFormatter(value, row, index) {
+            return 'Comment'
+        }
+
+    });
+
+
+    $scope.changeCurrentWorkspace = function (wk) {
+        $scope.currentWorkspace = wk;
+    };
+
+
+    //Select the workspace in document ready event
+    $(document).ready(function () {
+        $scope.changeCurrentWorkspace($scope.workspaces[0]);
+        $scope.$apply();
     });
 
 });
