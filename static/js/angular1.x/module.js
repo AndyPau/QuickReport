@@ -24,7 +24,7 @@ Date.prototype.Format = function (fmt) {
 
 // Angular Module
 var QuickReportAppModule = angular.module('QuickReportApp', ['ngAnimate', 'ngSanitize', 'ui.bootstrap',
-    'ui.bootstrap.datetimepicker', 'ui.dateTimeInput']);
+    'ui.bootstrap.datetimepicker', 'ui.dateTimeInput', 'ui.tinymce']);
 
 QuickReportAppModule.factory('mySharedService', function ($rootScope) {
     var sharedService = {};
@@ -57,6 +57,14 @@ QuickReportAppModule.controller('GenerateInputCtrl', function ($scope, mySharedS
 });
 
 QuickReportAppModule.controller('ControllerTestOne', function ($scope, mySharedService) {
+
+    $scope.$on('handleBroadcast', function () {
+        $scope.dtInput = mySharedService.message;
+    });
+
+});
+
+QuickReportAppModule.controller('ControllerTestTwo', function ($scope, mySharedService) {
 
     $scope.$on('handleBroadcast', function () {
         $scope.dtInput = mySharedService.message;
