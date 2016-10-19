@@ -56,5 +56,32 @@ def echartcase(date):
     return jsonify(option=template.line_template_option)
 
 
+@app.route('/api/v1/tablecase/<date>')
+def tablecase(date):
+    data = [
+        {
+            "id": 0,
+            "name": "Item 0",
+            "price": "$0"
+        },
+        {
+            "id": 1,
+            "name": "Item 1",
+            "price": "$1"
+        },
+        {
+            "id": 2,
+            "name": "Item 2",
+            "price": "$2"
+        },
+        {
+            "id": 3,
+            "name": "Item 3",
+            "price": "$3"
+        }
+    ]
+    return jsonify(data);
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=9000, debug=True)

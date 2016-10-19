@@ -5,7 +5,17 @@ line_template_option = {
         "subtext": '纯属虚构'
     },
     "tooltip": {
-        "trigger": 'axis'
+        "trigger": 'axis',
+        "showDelay": 0,
+        "axisPointer": {
+            "show": True,
+            "type": 'cross',
+            "lineStyle": {
+                "type": 'dashed',
+                "width": 1
+            }
+        },
+        "zlevel": 1
     },
     "legend": {
         "data": ['最高气温', '最低气温']

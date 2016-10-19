@@ -65,124 +65,211 @@ QuickReportAppModule.controller('ControllerTestOne', function ($scope, mySharedS
             method: 'GET',
             url: '/api/v1/echartcase/' + $scope.dtInput
         });
-        p.success(function (resp) {
-            myChart = echarts.init($('#fbchart').addClass('panel').addClass('panel-default').height(400).get(0));
-            myChart.setOption(resp.option)
+        p.success(function (result) {
+            myChart = echarts.init($('#fbchart').addClass('panel').addClass('panel-default').height(300).get(0));
+            // myChart.showLoading()
+            myChart.setOption(result.option)
         });
 
     });
 
 });
 
-QuickReportAppModule.controller('ControllerTestTwo', function ($scope, mySharedService) {
+QuickReportAppModule.controller('ControllerTestTwo', function ($scope, mySharedService, $http) {
 
     $scope.$on('handleBroadcast', function () {
         $scope.dtInput = mySharedService.message;
+
+        var p = $http({
+            method: 'GET',
+            url: '/api/v1/echartcase/' + $scope.dtInput
+        });
+        p.success(function (result) {
+            myChart = echarts.init($('#yhchart').addClass('panel').addClass('panel-default').height(300).get(0));
+            myChart.setOption(result.option)
+        });
+
     });
 
 });
 
 QuickReportAppModule.controller('ReportDescriptionCtrl', function ($scope, mySharedService) {
-    $scope.tinymceOptions = {
-        skin: 'lightgray',
-        theme: 'modern',
-        menubar: false,
-        resize: false
-    };
-
-});
-
-QuickReportAppModule.controller('MainTableCtrl', function ($scope, $http) {
-    $scope.workspaces = [];
-    $scope.workspaces.push({name: 'Workspace 1'});
-    $scope.workspaces.push({name: 'Workspace 2'});
-    $scope.workspaces.push({name: 'Workspace 3'});
-
-    function makeRandomRows(colData) {
-        var rows = [];
-        for (var i = 0; i < 15; i++) {
-            rows.push($.extend({
-                index: i,
-                id: 'row ' + i,
-                name: 'GOOG' + i
-
-            }, colData));
-        }
-        return rows;
-    }
-
-    $scope.workspaces.forEach(function (wk, index) {
-        var colData = {workspace: wk.name};
-        wk.rows = makeRandomRows(colData);
-
-        wk.bsTableControl = {
-            options: {
-                data: wk.rows,
-                rowStyle: function (row, index) {
-                    return {classes: 'none'};
-                },
-                cache: false,
-                striped: true,
-                pagination: false,
-                search: true,
-                showColumns: false,
-                showRefresh: false,
-                minimumCountColumns: 2,
-                clickToSelect: false,
-                showToggle: false,
-                maintainSelected: false,
-                columns: [{
-                    field: 'index',
-                    title: '#',
-                    align: 'right',
-                    valign: 'bottom',
-                    sortable: false
-                }, {
-                    field: 'id',
-                    title: 'Item ID',
-                    align: 'center',
-                    valign: 'bottom',
-                    sortable: false
-                }, {
-                    field: 'name',
-                    title: 'Item Name',
-                    align: 'center',
-                    valign: 'middle',
-                    sortable: false
-                }, {
-                    field: 'workspace',
-                    title: 'Workspace',
-                    align: 'left',
-                    valign: 'top',
-                    sortable: false
-                }, {
-                    field: 'flag',
-                    title: 'Flag',
-                    align: 'center',
-                    valign: 'middle',
-                    clickToSelect: false,
-                    formatter: flagFormatter,
-                    // events: flagEvents
-                }]
-            }
+    $scope.$on('handleBroadcast', function () {
+        $scope.dtInput = mySharedService.message;
+        $scope.tinymceOptions = {
+            skin: 'lightgray',
+            theme: 'modern',
+            menubar: false,
+            resize: false
         };
-        function flagFormatter(value, row, index) {
-            return 'Comment'
-        }
-
-    });
-
-
-    $scope.changeCurrentWorkspace = function (wk) {
-        $scope.currentWorkspace = wk;
-    };
-
-
-    //Select the workspace in document ready event
-    $(document).ready(function () {
-        $scope.changeCurrentWorkspace($scope.workspaces[0]);
-        $scope.$apply();
     });
 
 });
+
+QuickReportAppModule.controller('MainTableCtrl', function ($scope, $http, mySharedService) {
+
+        $scope.$on('handleBroadcast', function () {
+            $scope.dtInput = mySharedService.message;
+            var $table = $('#table');
+
+            // $table.on('post-body.bs.table', function () {
+            //     $table.bootstrapTable('mergeCells', {
+            //         index: 2,
+            //         field: 'id',
+            //         rowspan: 2,
+            //         colspan: 1
+            //     });
+            // });
+
+            function initTable() {
+                $table.bootstrapTable({
+                    url: '/api/v1/tablecase/' + $scope.dtInput,
+                    method: 'GET',
+                    detailView: false,
+                    rowStyle: function (row, index) {
+                        var classes = ['active', 'success', 'info', 'warning', 'danger'];
+                        if (index % 2 === 0 && index / 2 < classes.length) {
+                            return {
+                                classes: classes[index / 2]
+                            };
+                        }
+                        return {};
+                    },
+
+                    cellStyle: function (value, row, index, field) {
+                        var classes = ['active', 'success', 'info', 'warning', 'danger'];
+
+                        if (index === 1 && row === 1) {
+                            return {
+                                classes: classes[2]
+                            };
+                        }
+                        return {};
+                    },
+
+                    onLoadSuccess: function () {
+                        $table.bootstrapTable('mergeCells', {
+                            index: 2,
+                            field: 'id',
+                            rowspan: 2,
+                            colspan: 1
+                        });
+                    },
+
+                    onExpandRow: function (index, row, $detail) {
+                        oInit.InitSubTable(index, row, $detail);
+                    },
+
+                    columns: [
+                        [
+                            {
+                                title: 'Item ID',
+                                field: 'id',
+                                rowspan: 2,
+                                align: 'center',
+                                valign: 'middle',
+                                sortable: false
+                            },
+                            {
+                                title: 'Item Detail',
+                                colspan: 3,
+                                align: 'center',
+                                valign: 'middle'
+                            }
+                        ],
+                        [
+                            {
+                                field: 'name',
+                                title: 'Item Name',
+                                sortable: false,
+                                editable: false,
+                                align: 'center',
+                                valign: 'middle'
+                            },
+                            {
+                                field: 'price',
+                                title: 'Item Price',
+                                sortable: false,
+                                align: 'center',
+                                valign: 'middle'
+                            }
+                        ]
+                    ],
+                });
+            }
+
+            window.operateEvents = {
+                'click .like': function (e, value, row, index) {
+                    alert('You click like action, row: ' + JSON.stringify(row));
+                },
+                'click .remove': function (e, value, row, index) {
+                    $table.bootstrapTable('remove', {
+                        field: 'id',
+                        values: [row.id]
+                    });
+                }
+            };
+
+            $(function () {
+                var scripts = [
+                        location.search.substring(1) || '//cdn.bootcss.com/bootstrap-table/1.11.0/bootstrap-table.min.js',
+                        '//cdn.bootcss.com/bootstrap-table/1.11.0/extensions/export/bootstrap-table-export.min.js',
+                        'http://rawgit.com/hhurz/tableExport.jquery.plugin/master/tableExport.js',
+                        '//cdn.bootcss.com/bootstrap-table/1.11.0/extensions/editable/bootstrap-table-editable.min.js',
+                        'http://rawgit.com/vitalets/x-editable/master/dist/bootstrap3-editable/js/bootstrap-editable.js'
+                    ],
+                    eachSeries = function (arr, iterator, callback) {
+                        callback = callback || function () {
+                            };
+                        if (!arr.length) {
+                            return callback();
+                        }
+                        var completed = 0;
+                        var iterate = function () {
+                            iterator(arr[completed], function (err) {
+                                if (err) {
+                                    callback(err);
+                                    callback = function () {
+                                    };
+                                }
+                                else {
+                                    completed += 1;
+                                    if (completed >= arr.length) {
+                                        callback(null);
+                                    }
+                                    else {
+                                        iterate();
+                                    }
+                                }
+                            });
+                        };
+                        iterate();
+                    };
+                eachSeries(scripts, getScript, initTable);
+            });
+            function getScript(url, callback) {
+                var head = document.getElementsByTagName('head')[0];
+                var script = document.createElement('script');
+                script.src = url;
+                var done = false;
+                // Attach handlers for all browsers
+                script.onload = script.onreadystatechange = function () {
+                    if (!done && (!this.readyState ||
+                        this.readyState == 'loaded' || this.readyState == 'complete')) {
+                        done = true;
+                        if (callback)
+                            callback();
+                        // Handle memory leak in IE
+                        script.onload = script.onreadystatechange = null;
+                    }
+                };
+                head.appendChild(script);
+                // We handle everything using the script element injection
+                return undefined;
+            }
+        });
+
+
+    }
+);
 

@@ -2,28 +2,9 @@
   "name": "quickreport",
   "version": "0.1.0",
   "dependencies": {
-    "angular": "1.5.8",
-    "jquery": "1.11.2",
-    "bootstrap": "3.3.7",
-    "underscore": "1.5.1",
-    "pivottable": "2.1.0",
-    "underscore.string": "~2.3.3",
-    "pace": "~0.5.1",
-    "font-awesome": "~4.2.0",
-    "material-design-iconic-font": "^2.2.0",
-    "plotly.js": "^1.9.0",
-    "bootstrap-table": "^1.11.0",
-    "angular-resource": "^1.5.8",
-    "restangular": "^1.5.2",
     "angular-bootstrap-datetimepicker": "^1.1.2",
     "angular-date-time-input": "^1.2.1",
     "angular-ui-tinymce": "^0.0.17"
   },
-  "devDependencies": {
-    "angular-mocks": "1.2.18",
-    "angular-scenario": "1.2.18"
-  },
-  "resolutions": {
-    "angular": "1.2.18"
-  }
+  "devDependencies": {}
 }
