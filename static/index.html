@@ -113,8 +113,8 @@
 
     <div class="row">
         {% raw %}
-        <div class="col-md-6">
-            <h2 ng-controller="ControllerTestOne">{{ dtInput }}</h2>
+        <div class="col-md-6" id="fbchart" ng-controller="ControllerTestOne">
+
         </div>
         <div class="col-md-6">
             <h2 ng-controller="ControllerTestTwo">{{ dtInput }}</h2>
@@ -135,6 +135,7 @@
 <script type="text/javascript" src="//cdn.bootcss.com/angular.js/1.5.8/angular.min.js"></script>
 <script type="text/javascript" src="//cdn.bootcss.com/angular.js/1.5.8/angular-animate.min.js"></script>
 <script type="text/javascript" src="//cdn.bootcss.com/angular.js/1.5.8/angular-sanitize.min.js"></script>
+<script type="text/javascript" src="//cdn.bootcss.com/angular-resource/1.5.8/angular-resource.min.js"></script>
 <script type="text/javascript" src="//cdn.bootcss.com/moment.js/2.15.1/moment.min.js"></script>
 <script type="text/javascript" src="//cdn.bootcss.com/angular-ui-bootstrap/2.2.0/ui-bootstrap-tpls.min.js"></script>
 <script type="text/javascript" src="//cdn.bootcss.com/tinymce/4.4.3/tinymce.min.js"></script>
@@ -156,7 +157,7 @@
         src="{{ url_for('static', filename='js/vendor/angular-ui-tinymce/src/tinymce.js') }}"></script>
 
 <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-<script src="{{ url_for('static', filename='js/angular1.x/module.js') }}"></script>
+<script src="{{ url_for('static', filename='js/angular1.x/module.js') +'?'+ range(1,100)|random|string }}"></script>
 
 <script src="https://www.gstatic.com/firebasejs/3.4.1/firebase.js"></script>
 <script>

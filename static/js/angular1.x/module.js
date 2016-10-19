@@ -23,7 +23,7 @@ Date.prototype.Format = function (fmt) {
 }
 
 // Angular Module
-var QuickReportAppModule = angular.module('QuickReportApp', ['ngAnimate', 'ngSanitize', 'ui.bootstrap',
+var QuickReportAppModule = angular.module('QuickReportApp', ['ngAnimate', 'ngSanitize', 'ngResource', 'ui.bootstrap',
     'ui.bootstrap.datetimepicker', 'ui.dateTimeInput', 'ui.tinymce', 'bsTable']);
 
 QuickReportAppModule.factory('mySharedService', function ($rootScope) {
@@ -56,10 +56,20 @@ QuickReportAppModule.controller('GenerateInputCtrl', function ($scope, mySharedS
 
 });
 
-QuickReportAppModule.controller('ControllerTestOne', function ($scope, mySharedService) {
+QuickReportAppModule.controller('ControllerTestOne', function ($scope, mySharedService, $http) {
 
     $scope.$on('handleBroadcast', function () {
         $scope.dtInput = mySharedService.message;
+
+        var p = $http({
+            method: 'GET',
+            url: '/api/v1/echartcase/' + $scope.dtInput
+        });
+        p.success(function (resp) {
+            myChart = echarts.init($('#fbchart').addClass('panel').addClass('panel-default').height(400).get(0));
+            myChart.setOption(resp.option)
+        });
+
     });
 
 });
@@ -115,12 +125,12 @@ QuickReportAppModule.controller('MainTableCtrl', function ($scope, $http) {
                 striped: true,
                 pagination: false,
                 search: true,
-                showColumns: true,
+                showColumns: false,
                 showRefresh: false,
                 minimumCountColumns: 2,
                 clickToSelect: false,
-                showToggle: true,
-                maintainSelected: true,
+                showToggle: false,
+                maintainSelected: false,
                 columns: [{
                     field: 'index',
                     title: '#',
