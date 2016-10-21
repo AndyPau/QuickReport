@@ -1,13 +1,16 @@
 # coding = utf-8
 
-from flask import Flask, send_from_directory, jsonify
+from flask import Flask, jsonify
 from flask import render_template
 from flask_sqlalchemy import SQLAlchemy
 import template.charts.line_option
+from flask_sockets import Sockets
+from flask_socketio import SocketIO, emit
 
 app = Flask(__name__, template_folder='static', static_folder='static')
 app.config.from_object('config')
 database = SQLAlchemy(app)
+socketio = SocketIO(app)
 
 
 # # 默认情况下，浏览器无法加载根目录下node_modules内的资源文件，增加该方法来处理请求
@@ -25,6 +28,11 @@ def index():
 @app.route('/api/v1/echartcase/<date>')
 def facebook(date):
     return jsonify(option=template.line_template_option)
+
+
+@socketio.on('syncdb')
+def handle_syncdb(message):
+    print('received message: ' + message)
 
 
 @app.route('/api/v1/tablecase/<date>')
@@ -55,4 +63,4 @@ def daily_report_traffic(date):
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=9000, debug=True)
+    socketio.run(app, host='0.0.0.0', port=9000, debug=True)

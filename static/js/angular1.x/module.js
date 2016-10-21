@@ -24,7 +24,7 @@ Date.prototype.Format = function (fmt) {
 
 // Angular Module
 var QuickReportAppModule = angular.module('QuickReportApp', ['ngAnimate', 'ngSanitize', 'ngResource', 'ui.bootstrap',
-    'ui.bootstrap.datetimepicker', 'ui.dateTimeInput', 'ui.tinymce', 'bsTable']);
+    'ui.bootstrap.datetimepicker', 'ui.dateTimeInput', 'ui.tinymce', 'bsTable', 'ngWebSocket']);
 
 QuickReportAppModule.factory('mySharedService', function ($rootScope) {
     var sharedService = {};
@@ -48,6 +48,13 @@ QuickReportAppModule.controller('GenerateInputCtrl', function ($scope, mySharedS
     $scope.GenerateClick = function () {
         var dtInput = $scope.data.dtInput.Format('yyyy-MM-dd');
         mySharedService.prepForBroadcast(dtInput);
+    }
+
+    $scope.SyncDB = function () {
+        // var socket = io.connect('http://' + document.domain + ':' + location.port);
+        // socket.on('connect', function () {
+        //     socket.emit('syncdb', {data: 'baoguoqiang'});
+        // });
     }
 
     $scope.$on('handleBroadcast', function () {
