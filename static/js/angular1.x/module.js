@@ -55,6 +55,16 @@ QuickReportAppModule.controller('GenerateInputCtrl', function ($scope, mySharedS
         // socket.on('connect', function () {
         //     socket.emit('syncdb', {data: 'baoguoqiang'});
         // });
+
+        var p = $http({
+            method: 'GET',
+            url: '/api/v1/syncdb/' + $scope.dtInput
+        });
+        p.success(function (result) {
+            if (result instanceof String) {
+                alert('Data Sync Successfully' + result)
+            }
+        });
     }
 
     $scope.$on('handleBroadcast', function () {

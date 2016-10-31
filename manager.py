@@ -4,13 +4,13 @@ from flask import Flask, jsonify
 from flask import render_template
 from flask_sqlalchemy import SQLAlchemy
 import template.charts.line_option
-from flask_sockets import Sockets
-from flask_socketio import SocketIO, emit
+import pandas as pd
+import pymysql
+import utils.spider.FaceBookSpider as spider
 
 app = Flask(__name__, template_folder='static', static_folder='static')
 app.config.from_object('config')
 database = SQLAlchemy(app)
-socketio = SocketIO(app)
 
 
 # # 默认情况下，浏览器无法加载根目录下node_modules内的资源文件，增加该方法来处理请求
@@ -30,9 +30,22 @@ def facebook(date):
     return jsonify(option=template.line_template_option)
 
 
-@socketio.on('syncdb')
-def handle_syncdb(message):
-    print('received message: ' + message)
+@app.route('/api/v1/syncdb/<date>')
+def handle_syncdb(date):
+    host = 'offer-hero.cq7ehxlwlj3o.us-west-2.rds.amazonaws.com'
+    user = 'offer_hero'
+    passwd = 'ue9ye6tlvjk4s4f6usrhnj0nbm7gb20'
+    db = 'offer_hero'
+    sql = ''
+    conn = pymysql.connect(host=host, port=3306, user=user, passwd=passwd, db=db, charset='UTF8')
+    df = pd.read_sql(sql, conn)
+    conn.close()
+    return df.to_json()
+
+
+@app.route('/api/v1/spider/<date>')
+def handle_spider(date):
+    return spider.spider_output_html('2016-11-01', date)
 
 
 @app.route('/api/v1/tablecase/<date>')
@@ -63,4 +76,4 @@ def daily_report_traffic(date):
 
 
 if __name__ == '__main__':
-    socketio.run(app, host='0.0.0.0', port=9000, debug=True)
+    app.run(host='0.0.0.0', port=9000, debug=True)
